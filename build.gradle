@@ -5,7 +5,7 @@ plugins {
 }
 
 version "0.1"
-group "com.eightm.octopus"
+group "com.eightm.yasb"
 
 repositories {
     mavenCentral()
@@ -39,7 +39,7 @@ dependencies {
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "com.eightm.octopus.Application"
+mainClassName = "com.eightm.yasb.Application"
 
 // use JUnit 5 platform
 test {
