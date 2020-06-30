@@ -20,7 +20,7 @@ import static io.micronaut.http.HttpRequest.POST;
 
 @Controller("/messages")
 public class MessageController {
-    private final String token = System.getenv("BOT_TOKEN");
+    private final String token = "/bot" + System.getenv("BOT_TOKEN");
 
     @Client("https://api.telegram.org")
     @Inject
