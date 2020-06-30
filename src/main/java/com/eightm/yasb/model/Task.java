@@ -1,4 +1,4 @@
-package com.eightm.yasb;
+package com.eightm.yasb.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
