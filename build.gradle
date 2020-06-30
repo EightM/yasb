@@ -79,5 +79,7 @@ tasks.withType(JavaExec) {
     }
 }
 
+task stage(dependsOn: ['assemble'])
+
 
 
