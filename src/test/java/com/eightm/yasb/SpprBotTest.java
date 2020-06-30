@@ -1,4 +1,4 @@
-package com.eightm;
+package com.eightm.yasb;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.annotation.MicronautTest;
