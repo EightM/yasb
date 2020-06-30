@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: com.eightm
+defaultPackage: com.eightm.yasb
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle

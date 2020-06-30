@@ -1,4 +1,4 @@
-package com.eightm.octopus;
+package com.eightm.yasb;
 
 import io.micronaut.runtime.Micronaut;
 
