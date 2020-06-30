@@ -1,6 +1,5 @@
 package com.eightm.yasb.controllers;
 
-import com.eightm.yasb.model.Message;
 import com.eightm.yasb.model.MessageForSend;
 import com.eightm.yasb.model.Task;
 import io.micronaut.http.HttpResponse;
