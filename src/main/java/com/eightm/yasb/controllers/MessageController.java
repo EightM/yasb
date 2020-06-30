@@ -1,6 +1,7 @@
 package com.eightm.yasb.controllers;
 
 import com.eightm.yasb.model.Message;
+import com.eightm.yasb.model.MessageForSend;
 import com.eightm.yasb.model.Task;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -27,10 +28,10 @@ public class MessageController {
 
     @Post(consumes = MediaType.APPLICATION_JSON)
     public Maybe<HttpStatus> sendMessage(Task task) {
-        Message message = new Message(task.getRecipientId(), task.getAuthor() + "\n" + task.getText());
+        MessageForSend message = new MessageForSend(task.getRecipientId(), task.getAuthor() + "\n" + task.getText());
         return httpClient.exchange(
                 POST(token + "/sendMessage", message),
-                Message.class
+                MessageForSend.class
         ).firstElement().map(HttpResponse::getStatus);
     }
 
