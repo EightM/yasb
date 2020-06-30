@@ -1,0 +1,1 @@
+web: java -jar build/libs/sppr-bot-0.1-all.jar
