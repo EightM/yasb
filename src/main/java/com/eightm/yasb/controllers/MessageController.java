@@ -20,8 +20,7 @@ import static io.micronaut.http.HttpRequest.POST;
 
 @Controller("/messages")
 public class MessageController {
-    @Value("${telegram.token}")
-    private String token;
+    private final String token = System.getenv("BOT_TOKEN");
 
     @Client("https://api.telegram.org")
     @Inject
@@ -29,7 +28,6 @@ public class MessageController {
 
     @Post(consumes = MediaType.APPLICATION_JSON)
     public Maybe<HttpStatus> sendMessage(Task task) {
-
         Message message = new Message(task.getRecipientId(), task.getAuthor() + "\n" + task.getText());
         return httpClient.exchange(
                 POST(token + "/sendMessage", message),
