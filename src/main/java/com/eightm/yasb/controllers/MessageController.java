@@ -1,7 +1,9 @@
 package com.eightm.yasb.controllers;
 
-import com.eightm.yasb.Message;
-import com.eightm.yasb.Task;
+import com.eightm.yasb.model.MessageForSend;
+import com.eightm.yasb.model.RegisterRequest;
+import com.eightm.yasb.model.Task;
+import com.eightm.yasb.model.Update;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -13,6 +15,7 @@ import io.micronaut.http.client.annotation.Client;
 import io.reactivex.Maybe;
 
 import javax.inject.Inject;
+import java.util.Objects;
 
 import static io.micronaut.http.HttpRequest.GET;
 import static io.micronaut.http.HttpRequest.POST;
@@ -20,6 +23,7 @@ import static io.micronaut.http.HttpRequest.POST;
 @Controller("/messages")
 public class MessageController {
     private final String token = "/bot" + System.getenv("BOT_TOKEN");
+    private final String spprAddress = System.getenv("SPPR_ADDRESS");
 
     @Client("https://api.telegram.org")
     @Inject
@@ -27,10 +31,32 @@ public class MessageController {
 
     @Post(consumes = MediaType.APPLICATION_JSON)
     public Maybe<HttpStatus> sendMessage(Task task) {
-        Message message = new Message(task.getRecipientId(), task.getAuthor() + "\n" + task.getText());
+        Objects.requireNonNull(task);
+
         return httpClient.exchange(
-                POST(token + "/sendMessage", message),
-                Message.class
+                POST(token + "/sendMessage", MessageForSend.createMessage(task)),
+                MessageForSend.class
+        ).firstElement().map(HttpResponse::getStatus);
+    }
+
+    @Post(value = "/webhook", consumes = MediaType.APPLICATION_JSON)
+    public Maybe<HttpStatus> handleWebHookUpdate(Update update) {
+        Objects.requireNonNull(spprAddress);
+        Objects.requireNonNull(update.getMessage());
+        String[] messageText = update.getMessage().getText().split("\\s+");
+
+        if (messageText.length != 2 || !messageText[0].equals("/start")) {
+            return Maybe.empty();
+        }
+
+        RegisterRequest registerRequest = new RegisterRequest();
+        registerRequest.setInviteId(messageText[1]);
+        registerRequest.setUserId(String.valueOf(update.getMessage().getFrom().getId()));
+
+        return httpClient.exchange(
+          POST(spprAddress + "/employees/register", "")
+                  .basicAuth("Admin", "")
+                  .body(registerRequest)
         ).firstElement().map(HttpResponse::getStatus);
     }
 
