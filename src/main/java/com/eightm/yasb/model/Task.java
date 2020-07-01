@@ -4,7 +4,13 @@ package com.eightm.yasb.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Task {
+    private String name;
+    private String status;
     private String author;
+
+    @JsonProperty("end_date")
+    private String endDate;
+
     private String text;
     @JsonProperty("recipient_id")
     private String recipientId;
@@ -40,5 +46,29 @@ public class Task {
 
     public void setRecipientId(String recipientId) {
         this.recipientId = recipientId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

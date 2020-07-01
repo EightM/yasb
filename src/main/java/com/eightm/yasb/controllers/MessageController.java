@@ -31,9 +31,10 @@ public class MessageController {
 
     @Post(consumes = MediaType.APPLICATION_JSON)
     public Maybe<HttpStatus> sendMessage(Task task) {
-        MessageForSend message = new MessageForSend(task.getRecipientId(), task.getAuthor() + "\n" + task.getText());
+        Objects.requireNonNull(task);
+
         return httpClient.exchange(
-                POST(token + "/sendMessage", message),
+                POST(token + "/sendMessage", MessageForSend.createMessage(task)),
                 MessageForSend.class
         ).firstElement().map(HttpResponse::getStatus);
     }
