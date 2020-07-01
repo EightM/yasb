@@ -17,6 +17,9 @@ public class MessageForSend {
         this.text = text;
     }
 
+    public MessageForSend() {
+    }
+
     public void setChatId(String chatId) {
         this.chatId = chatId;
     }

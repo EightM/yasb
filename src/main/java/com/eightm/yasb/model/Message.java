@@ -10,6 +10,7 @@ public class Message {
     private User from;
     private int date;
     private Chat chat;
+    private String text;
 
     public int getMessageId() {
         return messageId;
@@ -41,5 +42,13 @@ public class Message {
 
     public void setChat(Chat chat) {
         this.chat = chat;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }
