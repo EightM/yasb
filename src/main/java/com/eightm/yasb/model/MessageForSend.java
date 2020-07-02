@@ -19,6 +19,7 @@ public class MessageForSend {
     private static String generateMessageText(Task task) {
 
         return String.format("Привет, тебе пришла новая задача.%n") +
+                String.format("%s%n", task.getName()) +
                 String.format("Автор: %s%n", task.getAuthor()) +
                 String.format("Статус: %s%n", task.getStatus()) +
                 String.format("Дата окончания: %s%n", task.getEndDate()) +
