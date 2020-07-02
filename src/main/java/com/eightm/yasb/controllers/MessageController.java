@@ -1,5 +1,6 @@
 package com.eightm.yasb.controllers;
 
+import com.eightm.yasb.TelegramConfig;
 import com.eightm.yasb.model.MessageForSend;
 import com.eightm.yasb.model.RegisterRequest;
 import com.eightm.yasb.model.Task;
@@ -20,14 +21,19 @@ import java.util.Objects;
 import static io.micronaut.http.HttpRequest.GET;
 import static io.micronaut.http.HttpRequest.POST;
 
-@Controller("/messages")
+@Controller("/tasks")
 public class MessageController {
-    private final String token = "/bot" + System.getenv("BOT_TOKEN");
+
+    private final String token;
     private final String spprAddress = System.getenv("SPPR_ADDRESS");
 
     @Client("https://api.telegram.org")
     @Inject
     RxHttpClient httpClient;
+
+    public MessageController(TelegramConfig telegramConfig) {
+        token = "/bot" + telegramConfig.getToken();
+    }
 
     @Post(consumes = MediaType.APPLICATION_JSON)
     public Maybe<HttpStatus> sendMessage(Task task) {
