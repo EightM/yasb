@@ -1,6 +1,7 @@
 package com.eightm.yasb.controllers;
 
-import com.eightm.yasb.TelegramConfig;
+import com.eightm.yasb.config.SPPRConfig;
+import com.eightm.yasb.config.TelegramConfig;
 import com.eightm.yasb.model.MessageForSend;
 import com.eightm.yasb.model.RegisterRequest;
 import com.eightm.yasb.model.Task;
@@ -26,14 +27,16 @@ public class MessageController {
 
     private final String token;
     private final String spprAddress;
+    private final SPPRConfig spprConfig;
 
     @Client("https://api.telegram.org")
     @Inject
     RxHttpClient httpClient;
 
-    public MessageController(TelegramConfig telegramConfig) {
+    public MessageController(TelegramConfig telegramConfig, SPPRConfig spprConfig) {
         token = "/bot" + telegramConfig.getToken();
-        spprAddress = telegramConfig.getSppr();
+        this.spprConfig = spprConfig;
+        spprAddress = spprConfig.getAddress();
     }
 
     @Post(consumes = MediaType.APPLICATION_JSON)
@@ -62,7 +65,7 @@ public class MessageController {
 
         return httpClient.exchange(
           POST(spprAddress + "/employees/register", "")
-                  .basicAuth("Admin", "")
+                  .basicAuth(spprConfig.getLogin(), spprConfig.getPassword())
                   .body(registerRequest)
         ).firstElement().map(HttpResponse::getStatus);
     }
