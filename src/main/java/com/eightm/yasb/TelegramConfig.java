@@ -9,6 +9,7 @@ public class TelegramConfig {
 
     @NotBlank
     private String token;
+    private String sppr;
 
     public String getToken() {
         return token;
@@ -16,5 +17,13 @@ public class TelegramConfig {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getSppr() {
+        return sppr;
+    }
+
+    public void setSppr(String sppr) {
+        this.sppr = sppr;
     }
 }

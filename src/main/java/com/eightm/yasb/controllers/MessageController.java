@@ -25,7 +25,7 @@ import static io.micronaut.http.HttpRequest.POST;
 public class MessageController {
 
     private final String token;
-    private final String spprAddress = System.getenv("SPPR_ADDRESS");
+    private final String spprAddress;
 
     @Client("https://api.telegram.org")
     @Inject
@@ -33,6 +33,7 @@ public class MessageController {
 
     public MessageController(TelegramConfig telegramConfig) {
         token = "/bot" + telegramConfig.getToken();
+        spprAddress = telegramConfig.getSppr();
     }
 
     @Post(consumes = MediaType.APPLICATION_JSON)
