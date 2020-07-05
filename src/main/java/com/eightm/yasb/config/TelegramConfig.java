@@ -1,10 +1,13 @@
-package com.eightm.yasb;
+package com.eightm.yasb.config;
 
 import io.micronaut.context.annotation.ConfigurationProperties;
 
-@ConfigurationProperties(value = "telegram")
-public class TelegramProperties {
+import javax.validation.constraints.NotBlank;
 
+@ConfigurationProperties("telegram")
+public class TelegramConfig {
+
+    @NotBlank
     private String token;
 
     public String getToken() {
