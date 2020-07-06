@@ -15,6 +15,9 @@ public class Task {
     @JsonProperty("recipient_id")
     private String recipientId;
 
+    @JsonProperty("external_ref")
+    private String externalRef;
+
     public Task(String author, String text, String recipientId) {
         this.author = author;
         this.text = text;
@@ -22,6 +25,14 @@ public class Task {
     }
 
     public Task() {
+    }
+
+    public String getExternalRef() {
+        return externalRef;
+    }
+
+    public void setExternalRef(String externalRef) {
+        this.externalRef = externalRef;
     }
 
     public String getAuthor() {
