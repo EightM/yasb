@@ -7,7 +7,6 @@ public class MessageForSend {
     @JsonProperty("chat_id")
     private String chatId;
     private String text;
-
     @JsonProperty("parse_mode")
     private String parseMode;
 
@@ -26,15 +25,17 @@ public class MessageForSend {
                 String.format("%s%n", task.getName()) +
                 String.format("*Автор:* %s%n", task.getAuthor()) +
                 String.format("*Статус:* %s%n", task.getStatus()) +
-                String.format("*Дата окончания:* %s%n", task.getEndDate()) +
                 String.format("*Описание задачи:* %s%n", task.getText());
+
+        if (!task.getEndDate().isBlank()) {
+            text += String.format("*Дата окончания:* %s%n", task.getEndDate());
+        }
 
         if (!task.getExternalRef().isBlank()) {
             text += String.format("[Ссылка на задачу](%s)%n", task.getExternalRef());
         }
 
         return text;
-
     }
 
     public String getChatId() {
