@@ -1,4 +1,4 @@
-package com.eightm.yasb.model;
+package com.eightm.yasb.model.sppr;
 
 public interface SpprEntity {
     String generateMessageText();

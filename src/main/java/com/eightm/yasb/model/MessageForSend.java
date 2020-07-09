@@ -1,5 +1,6 @@
 package com.eightm.yasb.model;
 
+import com.eightm.yasb.model.sppr.SpprEntity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class MessageForSend {

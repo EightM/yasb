@@ -1,4 +1,4 @@
-package com.eightm.yasb.model;
+package com.eightm.yasb.model.sppr;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Singleton
-public class Task implements SpprEntity {
+public class SpprTask implements SpprEntity {
     private String name;
     private String code;
     private String status;
@@ -30,13 +30,13 @@ public class Task implements SpprEntity {
     @JsonProperty("external_ref")
     private String externalRef;
 
-    public Task(String author, String text, String recipientId) {
+    public SpprTask(String author, String text, String recipientId) {
         this.author = author;
         this.text = text;
         this.recipientId = recipientId;
     }
 
-    public Task() {
+    public SpprTask() {
     }
 
     public String getExternalRef() {

@@ -3,6 +3,9 @@ package com.eightm.yasb.controllers;
 import com.eightm.yasb.config.SPPRConfig;
 import com.eightm.yasb.config.TelegramConfig;
 import com.eightm.yasb.model.*;
+import com.eightm.yasb.model.sppr.SpprEntity;
+import com.eightm.yasb.model.sppr.SpprError;
+import com.eightm.yasb.model.sppr.SpprTask;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -19,7 +22,7 @@ import java.util.Objects;
 import static io.micronaut.http.HttpRequest.GET;
 import static io.micronaut.http.HttpRequest.POST;
 
-@Controller("tasks")
+@Controller("messages")
 public class MessageController {
 
     private final String token;
@@ -36,9 +39,14 @@ public class MessageController {
         spprAddress = spprConfig.getAddress();
     }
 
-    @Post(consumes = MediaType.APPLICATION_JSON)
-    public Maybe<HttpStatus> sendMessage(Task task) {
-        return postMessage(task);
+    @Post(value = "task", consumes = MediaType.APPLICATION_JSON)
+    public Maybe<HttpStatus> sendMessage(SpprTask spprTask) {
+        return postMessage(spprTask);
+    }
+
+    @Post(value = "error", consumes = MediaType.APPLICATION_JSON)
+    public Maybe<HttpStatus> sendMessage(SpprError spprError) {
+        return postMessage(spprError);
     }
 
     private Maybe<HttpStatus> postMessage(SpprEntity spprEntity) {
