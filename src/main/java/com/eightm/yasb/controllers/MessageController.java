@@ -2,10 +2,7 @@ package com.eightm.yasb.controllers;
 
 import com.eightm.yasb.config.SPPRConfig;
 import com.eightm.yasb.config.TelegramConfig;
-import com.eightm.yasb.model.MessageForSend;
-import com.eightm.yasb.model.RegisterRequest;
-import com.eightm.yasb.model.Task;
-import com.eightm.yasb.model.Update;
+import com.eightm.yasb.model.*;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -22,7 +19,7 @@ import java.util.Objects;
 import static io.micronaut.http.HttpRequest.GET;
 import static io.micronaut.http.HttpRequest.POST;
 
-@Controller("/tasks")
+@Controller("tasks")
 public class MessageController {
 
     private final String token;
@@ -41,10 +38,14 @@ public class MessageController {
 
     @Post(consumes = MediaType.APPLICATION_JSON)
     public Maybe<HttpStatus> sendMessage(Task task) {
-        Objects.requireNonNull(task);
+        return postMessage(task);
+    }
+
+    private Maybe<HttpStatus> postMessage(SpprEntity spprEntity) {
+        Objects.requireNonNull(spprEntity);
 
         return httpClient.exchange(
-                POST(token + "/sendMessage", MessageForSend.createMessage(task)),
+                POST(token + "/sendMessage", MessageForSend.createMessage(spprEntity)),
                 MessageForSend.class
         ).firstElement().map(HttpResponse::getStatus);
     }

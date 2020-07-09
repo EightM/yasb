@@ -3,10 +3,12 @@ package com.eightm.yasb.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Singleton
 public class Task implements SpprEntity {
     private String name;
     private String code;
@@ -23,6 +25,7 @@ public class Task implements SpprEntity {
     private String text;
     @JsonProperty("recipient_id")
     private String recipientId;
+    private EntityCategory entityCategory;
 
     @JsonProperty("external_ref")
     private String externalRef;
@@ -136,6 +139,14 @@ public class Task implements SpprEntity {
         this.endDate = endDate;
     }
 
+    public EntityCategory getEntityCategory() {
+        return entityCategory;
+    }
+
+    public void setEntityCategory(EntityCategory entityCategory) {
+        this.entityCategory = entityCategory;
+    }
+
     @Override
     public String generateMessageText() {
 
@@ -154,7 +165,7 @@ public class Task implements SpprEntity {
         fieldsMap.put("Ссылка на задачу", externalRef);
 
         return fieldsMap.entrySet().stream()
-                .filter(entry -> !entry.getValue().isBlank())
+                .filter(entry -> entry.getValue() != null)
                 .map(entry -> String.format("*%s*: %s%n", entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining());
     }
