@@ -4,7 +4,7 @@ package com.eightm.yasb.model.sppr;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.inject.Singleton;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -150,7 +150,7 @@ public class SpprTask implements SpprEntity {
     @Override
     public String generateMessageText() {
 
-        Map<String, String> fieldsMap = new HashMap<>();
+        Map<String, String> fieldsMap = new LinkedHashMap<>();
         fieldsMap.put("Наименование", name);
         fieldsMap.put("Код", code);
         fieldsMap.put("Статус", status);
