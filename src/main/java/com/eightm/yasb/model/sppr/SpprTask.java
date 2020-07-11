@@ -152,6 +152,8 @@ public class SpprTask implements SpprEntity {
 
         Map<String, String> fieldsMap = new LinkedHashMap<>();
         fieldsMap.put("Наименование", name);
+        fieldsMap.put("Проект", project);
+        fieldsMap.put("Описание", this.text);
         fieldsMap.put("Код", code);
         fieldsMap.put("Статус", status);
         fieldsMap.put("Автор", author);
@@ -160,12 +162,10 @@ public class SpprTask implements SpprEntity {
         fieldsMap.put("Дата начала", beginDate);
         fieldsMap.put("Дата окончания", endDate);
         fieldsMap.put("Предмет", subject);
-        fieldsMap.put("Проект", project);
-        fieldsMap.put("Описание", this.text);
         fieldsMap.put("Ссылка на задачу", externalRef);
 
         return fieldsMap.entrySet().stream()
-                .filter(entry -> entry.getValue() != null)
+                .filter(entry -> entry.getValue() != null && !entry.getValue().isBlank())
                 .map(entry -> String.format("*%s*: %s%n", entry.getKey(), entry.getValue()))
                 .collect(Collectors.joining());
     }
