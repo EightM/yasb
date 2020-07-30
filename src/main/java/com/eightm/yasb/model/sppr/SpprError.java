@@ -2,6 +2,10 @@ package com.eightm.yasb.model.sppr;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class SpprError implements SpprEntity {
 
     @JsonProperty("recipient_id")
@@ -13,19 +17,24 @@ public class SpprError implements SpprEntity {
     private String executor;
     private String comment;
     private String code;
-
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private String project;
 
     @Override
     public String generateMessageText() {
-        return description;
+        Map<String, String> fieldsMap = new LinkedHashMap<>();
+        fieldsMap.put("Наименование", name);
+        fieldsMap.put("Проект", project);
+        fieldsMap.put("Срочность исправления", priority);
+        fieldsMap.put("Порядок воспроизведения", description);
+        fieldsMap.put("Код", code);
+        fieldsMap.put("Статус", status);
+        fieldsMap.put("Исполнитель", executor);
+        fieldsMap.put("Комментарий", comment);
+
+        return fieldsMap.entrySet().stream()
+                .filter(entry -> entry.getValue() != null && !entry.getValue().isBlank())
+                .map(entry -> String.format("*%s*: %s%n", entry.getKey(), entry.getValue()))
+                .collect(Collectors.joining());
     }
 
     @Override
@@ -83,6 +92,22 @@ public class SpprError implements SpprEntity {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getProject() {
+        return project;
+    }
+
+    public void setProject(String project) {
+        this.project = project;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
 
