@@ -49,15 +49,6 @@ public class MessageController {
         return postMessage(spprError);
     }
 
-    private Maybe<HttpStatus> postMessage(SpprEntity spprEntity) {
-        Objects.requireNonNull(spprEntity);
-
-        return httpClient.exchange(
-                POST(token + "/sendMessage", MessageForSend.createMessage(spprEntity)),
-                MessageForSend.class
-        ).firstElement().map(HttpResponse::getStatus);
-    }
-
     @Post(value = "/webhook", consumes = MediaType.APPLICATION_JSON)
     public Maybe<HttpStatus> handleWebHookUpdate(Update update) {
         Objects.requireNonNull(spprAddress);
@@ -82,5 +73,14 @@ public class MessageController {
     @Get("/info")
     public Maybe<String> getBotInfo() {
         return httpClient.retrieve(GET(token + "/getMe")).firstElement();
+    }
+
+    private Maybe<HttpStatus> postMessage(SpprEntity spprEntity) {
+        Objects.requireNonNull(spprEntity);
+
+        return httpClient.exchange(
+                POST(token + "/sendMessage", MessageForSend.createMessage(spprEntity)),
+                MessageForSend.class
+        ).firstElement().map(HttpResponse::getStatus);
     }
 }
